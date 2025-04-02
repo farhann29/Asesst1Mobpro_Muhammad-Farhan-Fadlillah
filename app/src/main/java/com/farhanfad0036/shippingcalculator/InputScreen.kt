@@ -33,6 +33,7 @@ import java.util.Locale
 import android.content.Intent
 import android.content.Context
 import android.util.Log
+import androidx.compose.foundation.pager.PagerSnapDistance
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -55,5 +56,77 @@ fun InputScreen(navController: NavController) {
 
             )
         }
-    ) {}
+    ) { paddingValues ->
+        Column (
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues)
+                .padding(16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            Text("Enter shipping details", style = MaterialTheme.typography.headlineMedium)
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            OutlinedTextField(
+                value = distance,
+                onValueChange = {distance = it },
+                label = { Text("Distance (km)") },
+                keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number)
+            )
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            OutlinedTextField(
+                value = weight,
+                onValueChange = { weight = it },
+                label = { Text("Weight (kg)") },
+                keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number)
+            )
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Row {
+                RadioButton(selected = selectedService == "Regular", onClick = {selectedService = "Regular" })
+                Text("Regular", modifier = Modifier.padding(start = 8.dp))
+                Spacer(modifier = Modifier.width(16.dp))
+                RadioButton(selected = selectedService == "Express", onClick = {selectedService = "Express"})
+                Text("Express", modifier = Modifier.padding(start = 8.dp))
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Button(onClick = {
+                result = calculateShippingCost(distance.toDoubleOrNull(),weight.toDoubleOrNull(),selectedService)
+            } ) {
+                Text("Calculate")
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            if (result.isNotEmpty()) {
+                Text("Shipping Cost: $result", style = MaterialTheme.typography.bodyLarge)
+
+
+            }
+        }
+    }
+}
+fun calculateShippingCost(distance: Double?, weight: Double?, serviceType: String): String
+{
+    if (distance == null || weight == null || distance <= 0 || weight <= 0) return "Invalid input"
+
+    val baseRate = when (serviceType) {
+        "Regular" -> 2000
+        "Express" -> 5000
+        else -> 0
+    }
+    val distanceFactor = 1 + ((distance - 10).coerceAtLeast(0.0) / 10 * 0.1)
+
+    val totalCost = distanceFactor * weight * baseRate
+
+    val  formattedCost = NumberFormat.getNumberInstance(Locale("id", "ID")).format(totalCost.toInt())
+
+    return "Rp $formattedCost"
 }

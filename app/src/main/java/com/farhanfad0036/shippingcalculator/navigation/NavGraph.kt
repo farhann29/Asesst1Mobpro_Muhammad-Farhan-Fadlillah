@@ -5,6 +5,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.farhanfad0036.shippingcalculator.HomeScreen
+import com.farhanfad0036.shippingcalculator.InputScreen
 
 @Composable
 fun SetupNavGraph(navController: NavHostController) {
