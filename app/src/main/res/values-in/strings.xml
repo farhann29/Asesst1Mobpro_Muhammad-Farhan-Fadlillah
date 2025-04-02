@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ShippingCalculator</string>
+    <string name="start">Mulai</string>
+    <string name="enter_details">Masukkan Detail Pengiriman</string>
+    <string name="distance_label">Jarak (km)</string>
+    <string name="weight_label">Berat (kg)</string>
+    <string name="regular">Reguler</string>
+    <string name="express">Ekspres</string>
+    <string name="calculate">Hitung</string>
+</resources>

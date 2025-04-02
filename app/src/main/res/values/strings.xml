@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">ShippingCalculator</string>
+    <string name="start">Start</string>
+    <string name="enter_details">Enter Shipping Details</string>
+    <string name="distance_label">Distance (km)</string>
+    <string name="weight_label">Weight (kg)</string>
+    <string name="regular">Regular</string>
+    <string name="express">Express</string>
+    <string name="calculate">Calculate</string>
 </resources>
