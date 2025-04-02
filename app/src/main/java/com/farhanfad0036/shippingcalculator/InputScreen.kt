@@ -43,6 +43,7 @@ fun InputScreen(navController: NavController) {
     var weight by rememberSaveable { mutableStateOf("") }
     var selectedService by rememberSaveable { mutableStateOf("Regular") }
     var result by rememberSaveable { mutableStateOf("") }
+    val context = LocalContext.current
 
     Scaffold (
         topBar = {
@@ -108,7 +109,11 @@ fun InputScreen(navController: NavController) {
             if (result.isNotEmpty()) {
                 Text("Shipping Cost: $result", style = MaterialTheme.typography.bodyLarge)
 
+            Spacer(modifier = Modifier.height(16.dp))
 
+            Button(onClick = {shareResult(context, result)}) {
+                Text("Share")
+            }
             }
         }
     }
@@ -129,4 +134,16 @@ fun calculateShippingCost(distance: Double?, weight: Double?, serviceType: Strin
     val  formattedCost = NumberFormat.getNumberInstance(Locale("id", "ID")).format(totalCost.toInt())
 
     return "Rp $formattedCost"
+}
+
+fun shareResult(context: Context, result: String) {
+    try {
+        val  intent = Intent(Intent.ACTION_SEND).apply {
+            type = "text/plain"
+            putExtra(Intent.EXTRA_TEXT, "Shipping Cost Calculation:\n$result")
+        }
+        context.startActivity(Intent.createChooser(intent, "Share via"))
+    } catch (e: Exception) {
+        Log.e("ShareError", "Error sharing result: ${e.message}")
+    }
 }
