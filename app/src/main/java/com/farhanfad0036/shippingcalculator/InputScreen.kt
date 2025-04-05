@@ -17,13 +17,13 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Flight
+import androidx.compose.material.icons.filled.LocalShipping
 import androidx.compose.material3.Button
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
-import androidx.compose.material.icons.filled.LocalShipping
-import androidx.compose.material.icons.filled.Flight
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -41,6 +41,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
@@ -48,7 +49,6 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import java.text.NumberFormat
 import java.util.Locale
-import androidx.compose.ui.graphics.Color
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -221,7 +221,13 @@ fun InputScreen(navController: NavController) {
             Spacer(modifier = Modifier.height(16.dp))
 
             Button(onClick = {
-                shareResult(context, "Branch: $selectedBranch\n$result")
+                val message = """
+                    Selected Branch: $selectedBranch
+                    Service Type: $selectedService
+                    Result: $result
+                """.trimIndent()
+
+                shareResult(context, message)
             }) {
                 Text(stringResource(R.string.share))
             }
