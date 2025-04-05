@@ -3,6 +3,8 @@ package com.farhanfad0036.shippingcalculator
 import android.content.Context
 import android.content.Intent
 import android.util.Log
+import androidx.compose.animation.animateColorAsState
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -10,6 +12,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
@@ -19,6 +22,8 @@ import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
+import androidx.compose.material.icons.filled.LocalShipping
+import androidx.compose.material.icons.filled.Flight
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -43,6 +48,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import java.text.NumberFormat
 import java.util.Locale
+import androidx.compose.ui.graphics.Color
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -56,6 +62,14 @@ fun InputScreen(navController: NavController) {
     var expanded by remember { mutableStateOf(false) }
     var result by rememberSaveable { mutableStateOf("") }
     val context = LocalContext.current
+    val regularIconColor by animateColorAsState(
+        targetValue = if (selectedService == "Regular") Color(0xFF1976D2) else Color.Gray,
+        label = "RegularIconColor"
+    )
+    val expressIconColor by animateColorAsState(
+        targetValue = if (selectedService == "Express") Color(0xFFE53935) else Color.Gray,
+        label = "ExpressIconColor"
+    )
 
     Scaffold (
         topBar = {
@@ -136,12 +150,56 @@ fun InputScreen(navController: NavController) {
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            Row {
-                RadioButton(selected = selectedService == "Regular", onClick = {selectedService = "Regular" })
-                Text(stringResource(R.string.regular), modifier = Modifier.padding(start = 8.dp))
-                Spacer(modifier = Modifier.width(16.dp))
-                RadioButton(selected = selectedService == "Express", onClick = {selectedService = "Express"})
-                Text(stringResource(R.string.express), modifier = Modifier.padding(start = 8.dp))
+            Row (
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Row (
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier
+                        .clickable { selectedService = "Regular" }
+                        .padding(8.dp)
+                ) {
+                    RadioButton(
+                        selected = selectedService == "Regular",
+                        onClick = {selectedService = "Regular"}
+                    )
+                    Icon(
+                        imageVector = Icons.Filled.LocalShipping,
+                        contentDescription = stringResource(R.string.regular),
+                        tint = regularIconColor,
+                        modifier = Modifier
+                            .size(20.dp)
+                            .padding(start = 4.dp)
+                    )
+                    Text(
+                        text = stringResource(R.string.regular),
+                        modifier = Modifier.padding(start = 4.dp)
+                    )
+                }
+                Spacer(modifier = Modifier.width(24.dp))
+
+                Row (verticalAlignment = Alignment.CenterVertically,
+                     modifier = Modifier
+                         .clickable { selectedService = "Express" }
+                         .padding(8.dp)
+                    ) {
+                    RadioButton(
+                        selected = selectedService == "Express",
+                        onClick = {selectedService = "Express"}
+                    )
+                    Icon(
+                        imageVector = Icons.Filled.Flight,
+                        contentDescription = stringResource(R.string.express),
+                        tint = expressIconColor,
+                        modifier = Modifier
+                            .size(20.dp)
+                            .padding(start = 4.dp)
+                    )
+                    Text(
+                        text = stringResource(R.string.express),
+                        modifier = Modifier.padding(start = 4.dp)
+                    )
+                }
             }
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -182,6 +240,7 @@ fun calculateShippingCost(distance: Double?, weight: Double?, serviceType: Strin
     }
     val distanceFactor = 1 + ((distance - 10).coerceAtLeast(0.0) / 10 * 0.1)
     val totalCost = distanceFactor * weight * baseRate
+
     val  formattedCost = NumberFormat.getNumberInstance(Locale("id", "ID")).format(totalCost.toInt())
 
     return "Rp $formattedCost"
