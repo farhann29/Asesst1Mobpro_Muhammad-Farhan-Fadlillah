@@ -1,10 +1,15 @@
 <resources>
-    <string name="app_name">ShippingCalculator</string>
+    <string name="app_name">Shipcocal</string>
+    <string name="fullapp_name">Shipping Cost Calculator</string>
+    <string name="desc_app">Calculate your shipping cost easily</string>
     <string name="start">Start</string>
     <string name="enter_details">Enter Shipping Details</string>
     <string name="distance_label">Distance (km)</string>
     <string name="weight_label">Weight (kg)</string>
     <string name="regular">Regular</string>
     <string name="express">Express</string>
+    <string name="invalid">Invalid input</string>
     <string name="calculate">Calculate</string>
+    <string name="shipping_cost">Shipping cost: %1$s</string>
+    <string name="share">Share</string>
 </resources>

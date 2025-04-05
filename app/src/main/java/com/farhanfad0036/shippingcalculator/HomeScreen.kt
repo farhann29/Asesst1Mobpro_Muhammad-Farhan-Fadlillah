@@ -18,6 +18,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.farhanfad0036.shippingcalculator.navigation.Screen
@@ -28,7 +29,7 @@ fun  HomeScreen(navController: NavController) {
     Scaffold (
         topBar = {
             TopAppBar(
-                title = { Text("Shipping Calculator") }
+                title = { Text(stringResource(R.string.app_name)) }
             )
         }
     ) { paddingValues ->
@@ -47,19 +48,17 @@ fun  HomeScreen(navController: NavController) {
             )
             Spacer(modifier = Modifier.height(16.dp))
 
-            Text("Shipping Cost Calculator", style = MaterialTheme.typography.headlineMedium)
+            Text(stringResource(R.string.fullapp_name), style = MaterialTheme.typography.headlineMedium)
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            Text("Calculate your shipping cost easily", style = MaterialTheme.typography.bodyLarge)
+            Text(stringResource(R.string.desc_app), style = MaterialTheme.typography.bodyLarge)
 
             Spacer(modifier = Modifier.height(32.dp))
 
             Button(onClick = {navController.navigate(Screen.Input.route)}) {
-                Text("Start")
+                Text(stringResource(R.string.start))
             }
         }
     }
-
-
 }

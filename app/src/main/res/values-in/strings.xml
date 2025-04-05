@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">ShippingCalculator</string>
+    <string name="app_name">Shipcocal</string>
+    <string name="fullapp_name">Shipping Cost Calculator</string>
+    <string name="desc_app">Menghitung biaya pengirimanmu dengan mudah</string>
     <string name="start">Mulai</string>
     <string name="enter_details">Masukkan Detail Pengiriman</string>
     <string name="distance_label">Jarak (km)</string>
     <string name="weight_label">Berat (kg)</string>
     <string name="regular">Reguler</string>
     <string name="express">Ekspres</string>
+    <string name="invalid">Input tidak valid</string>
     <string name="calculate">Hitung</string>
+    <string name="shipping_cost">Biaya pengiriman: %1$s</string>
+    <string name="share">Bagikan</string>
 </resources>
