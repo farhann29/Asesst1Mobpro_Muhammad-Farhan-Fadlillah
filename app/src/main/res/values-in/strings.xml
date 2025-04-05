@@ -13,4 +13,6 @@
     <string name="calculate">Hitung</string>
     <string name="shipping_cost">Biaya pengiriman: %1$s</string>
     <string name="share">Bagikan</string>
+    <string name="back">Kembali</string>
+    <string name="branch">Cabang</string>
 </resources>

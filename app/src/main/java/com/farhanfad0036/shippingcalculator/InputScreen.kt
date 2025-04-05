@@ -15,7 +15,10 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Button
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExposedDropdownMenuBox
+import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -23,10 +26,12 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -46,6 +51,9 @@ fun InputScreen(navController: NavController) {
     var distance by rememberSaveable { mutableStateOf("") }
     var weight by rememberSaveable { mutableStateOf("") }
     var selectedService by rememberSaveable { mutableStateOf("Regular") }
+    val branchList = listOf("Jakarta", "Bandung", "Yogyakarta", "Medan", "Surabaya", "Padang", "Palembang")
+    var selectedBranch by rememberSaveable { mutableStateOf(branchList[0]) }
+    var expanded by remember { mutableStateOf(false) }
     var result by rememberSaveable { mutableStateOf("") }
     val context = LocalContext.current
 
@@ -56,7 +64,8 @@ fun InputScreen(navController: NavController) {
                 navigationIcon = {
                     IconButton(onClick = {navController.navigateUp() }) {
                         Icon(imageVector = Icons.Default.ArrowBack,
-                             contentDescription = "Back")
+                             contentDescription = stringResource(R.string.back)
+                        )
                     }
                 }
 
@@ -72,6 +81,40 @@ fun InputScreen(navController: NavController) {
             verticalArrangement = Arrangement.Center
         ) {
             Text(stringResource(R.string.enter_details), style = MaterialTheme.typography.headlineMedium)
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            ExposedDropdownMenuBox(
+                expanded = expanded,
+                onExpandedChange = {expanded = !expanded }
+            ) {
+                TextField(
+                    value = selectedBranch,
+                    onValueChange = {},
+                    readOnly = true,
+                    label = { Text(stringResource(R.string.branch)) },
+                    trailingIcon = {
+                        ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded)
+                    },
+                    modifier = Modifier.menuAnchor(),
+                    colors = ExposedDropdownMenuDefaults.textFieldColors()
+                )
+                ExposedDropdownMenu(
+                    expanded = expanded,
+                    onDismissRequest = { expanded = false}
+                ) {
+                    branchList.forEach{ branch ->
+                        DropdownMenuItem(
+                            text = { Text(branch) },
+                            onClick = {
+                                selectedBranch = branch
+                                expanded = false
+                            }
+                        )
+
+                    }
+                }
+            }
 
             Spacer(modifier = Modifier.height(16.dp))
 
@@ -119,7 +162,9 @@ fun InputScreen(navController: NavController) {
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            Button(onClick = {shareResult(context, result)}) {
+            Button(onClick = {
+                shareResult(context, "Branch: $selectedBranch\n$result")
+            }) {
                 Text(stringResource(R.string.share))
             }
             }

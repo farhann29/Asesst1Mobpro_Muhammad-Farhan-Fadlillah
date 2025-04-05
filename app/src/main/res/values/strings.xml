@@ -12,4 +12,6 @@
     <string name="calculate">Calculate</string>
     <string name="shipping_cost">Shipping cost: %1$s</string>
     <string name="share">Share</string>
+    <string name="back">Back</string>
+    <string name="branch">Branch</string>
 </resources>
