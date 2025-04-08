@@ -1,7 +1,6 @@
 package com.farhanfad0036.shippingcalculator
 
 import android.content.res.Configuration
-import android.net.wifi.hotspot2.pps.HomeSp
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
