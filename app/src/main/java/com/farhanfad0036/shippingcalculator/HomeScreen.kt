@@ -1,5 +1,7 @@
 package com.farhanfad0036.shippingcalculator
 
+import android.content.res.Configuration
+import android.net.wifi.hotspot2.pps.HomeSp
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -19,9 +21,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.farhanfad0036.shippingcalculator.navigation.Screen
+import com.farhanfad0036.shippingcalculator.ui.theme.ShippingCalculatorTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -60,5 +65,15 @@ fun  HomeScreen(navController: NavController) {
                 Text(stringResource(R.string.start))
             }
         }
+    }
+}
+
+@Preview(showBackground = true, name = "Light mode")
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES, showBackground = true, name = "Dark Mode")
+@Composable
+fun HomeScreenPreview() {
+    ShippingCalculatorTheme {
+        val navController = rememberNavController()
+        HomeScreen(navController = navController)
     }
 }

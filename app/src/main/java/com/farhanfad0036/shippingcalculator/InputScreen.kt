@@ -2,6 +2,7 @@ package com.farhanfad0036.shippingcalculator
 
 import android.content.Context
 import android.content.Intent
+import android.content.res.Configuration
 import android.util.Log
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.clickable
@@ -45,8 +46,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
+import com.farhanfad0036.shippingcalculator.ui.theme.ShippingCalculatorTheme
 import java.text.NumberFormat
 import java.util.Locale
 
@@ -261,5 +265,15 @@ fun shareResult(context: Context, result: String) {
         context.startActivity(Intent.createChooser(intent, "Share via"))
     } catch (e: Exception) {
         Log.e("ShareError", "Error sharing result: ${e.message}")
+    }
+}
+
+@Preview(showBackground = true, name = "Light Mode")
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES, showBackground = true, name = "Dark Mode")
+@Composable
+fun InputScreenPreview() {
+    ShippingCalculatorTheme {
+        val navController = rememberNavController()
+        InputScreen(navController = navController)
     }
 }
